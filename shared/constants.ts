@@ -34,7 +34,7 @@ export const initialAppConfig: appConfigType = {
 
 export const initialSwwwConfig: swwwConfig = {
     resizeType: ResizeType.crop,
-    fillColor: "#000000",
+    fillColor: "000000",
     filterType: FilterType.Lanczos3,
     transitionType: TransitionType.simple,
     transitionStep: 90,

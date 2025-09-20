@@ -170,7 +170,8 @@ const SwwwConfig = () => {
                                     className="h-8 w-1/5 rounded-lg"
                                     type="color"
                                     id="fillColor"
-                                    {...register("fillColor")}
+                                    {...register("fillColor", {
+                                        setValueAs: (value) => value.replace(/^#/, "")})}
                                 />
                             </div>
                             <div className="divider"></div>

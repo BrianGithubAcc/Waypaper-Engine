@@ -64,7 +64,7 @@ export async function resizeImageToFitMonitor(
 }
 
 function hexToSharpRgb(hex: string) {
-    const parsedHex = hex.replace(/^#/, "").toLowerCase();
+    const parsedHex = hex.toLowerCase();
     const r = parseInt(parsedHex.slice(0, 2), 16);
     const g = parseInt(parsedHex.slice(2, 4), 16);
     const b = parseInt(parsedHex.slice(4, 6), 16);

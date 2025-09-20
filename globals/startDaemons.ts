@@ -36,7 +36,7 @@ export function initSwwwDaemon() {
         if (configuration.format && isSwwwRunning()) {
             execSync("swww kill");
         }
-        const command = `swww-daemon --no-cache ${configuration.format ? "--format xrgb" : ""} &`;
+        const command = `swww-daemon --no-cache &`;
         const output = spawn(command, {
             stdio: "ignore",
             shell: true,

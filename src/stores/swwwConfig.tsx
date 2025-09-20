@@ -12,7 +12,7 @@ import {
 
 const initialSwwwConfig: swwwConfigInsertType["config"] = {
     resizeType: ResizeType.crop,
-    fillColor: "#000000",
+    fillColor: "000000",
     filterType: FilterType.Lanczos3,
     transitionType: TransitionType.simple,
     transitionStep: 90,
