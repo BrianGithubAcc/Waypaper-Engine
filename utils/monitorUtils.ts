@@ -14,13 +14,13 @@ function parseSwwwQuery(stdout: string) {
         })
         .map((monitor, index) => {
             const splitInfo = monitor.split(":");
-            const resolutionString = splitInfo[1].split(",")[0].trim();
+            const resolutionString = splitInfo[2].split(",")[0].trim();
             const { width, height } = parseResolution(resolutionString);
             return {
-                name: splitInfo[0].trim(),
+                name: splitInfo[1].trim(),
                 width,
                 height,
-                currentImage: splitInfo[4].trim(),
+                currentImage: splitInfo[5].trim(),
                 position: index
             };
         });
