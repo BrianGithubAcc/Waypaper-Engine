@@ -60,7 +60,7 @@ yay -S waypaper-engine-git
 Both the normal and -git version conflict with each other, so make sure to delete the other with `yay -Rns package_name package_name-debug` before installing either.
 
 ## Manual installation
-
+Remember to install depdancies as well (see aur package for list)
 Be advised you will need to run some of the commands with sudo privileges as you will be copying files to protected paths.
 
 1. Clone this repo `git clone git@github.com:0bCdian/Waypaper-Engine.git` or download and extract the zip file
