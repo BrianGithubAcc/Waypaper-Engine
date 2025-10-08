@@ -8,7 +8,8 @@ import {
     screen,
     net
 } from "electron";
-import { join } from "node:path";
+import path, { join } from "node:path";
+const fs = require('fs');
 import {
     copyImagesToCacheAndProcessThumbnails,
     openAndReturnImagesObject,
@@ -38,6 +39,7 @@ import { getMonitors } from "../utils/monitorUtils";
 import { tryToSetImage, restoreLastWallpaper } from "../utils/imageOperations";
 import { ACTIONS } from "../types/types";
 import type EventEmitter from "node:events";
+import electron from "vite-plugin-electron";
 if (values.daemon !== undefined && (values.daemon as boolean)) {
     logger.info("starting daemon...");
     try {
@@ -116,13 +118,40 @@ function createMenu() {
         Menu.setApplicationMenu(mainMenu);
     }
 }
+
 function registerFileProtocol() {
-    protocol.handle(
-        "atom",
-        async request =>
-            await net.fetch("file://" + request.url.slice("atom://".length))
-    );
+  console.log("Registering custom protocol");
+  const baseDir = path.resolve(__dirname, "assets");
+
+  protocol.handle("atom", async (request) => {
+    const filePath = decodeURIComponent(request.url.slice("atom://".length));
+    const absolutePath = path.resolve(baseDir, filePath);
+    console.log(absolutePath);
+
+    try {
+      await fs.promises.access(absolutePath);
+      const data = await fs.promises.readFile(absolutePath);
+      return new Response(data, { headers: { "Content-Type": "image/webp" } });
+    } catch (err) {
+      // Instead of error flood, return default transparent webp or a small placeholder file
+      //THis happends if swww is queried too much idk why
+      console.warn(`Missing file ${absolutePath}, serving placeholder.`);
+      const placeholderPath = path.resolve(baseDir, "placeholder.webp");
+      try {
+        const placeholderData = await fs.promises.readFile(placeholderPath);
+        return new Response(placeholderData, { headers: { "Content-Type": "image/webp" } });
+      } catch {
+        // If placeholder missing too, return empty 404 response silently
+        return new Response(null, { status: 404 });
+      }
+    }
+  });
 }
+
+
+
+
+
 
 async function createTray() {
     if (tray === null) {
@@ -215,7 +244,7 @@ app.whenReady()
         dbOperations.on("updateTray", () => {
             void createTray();
         });
-        registerFileProtocol();
+        registerFileProtocol();      
         await createWindow();
     })
     .catch(e => {

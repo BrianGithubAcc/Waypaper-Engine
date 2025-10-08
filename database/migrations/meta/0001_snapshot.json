@@ -302,7 +302,7 @@
                     "autoincrement": false,
                     "default": {
                         "resizeType": "crop",
-                        "fillColor": "#000000",
+                        "fillColor": "000000",
                         "filterType": "Lanczos3",
                         "transitionType": "simple",
                         "transitionStep": 90,
